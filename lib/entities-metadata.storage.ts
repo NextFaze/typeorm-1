@@ -1,13 +1,13 @@
-import { Connection, ConnectionOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { EntityClassOrSchema } from './interfaces/entity-class-or-schema.type';
 
-type ConnectionToken = Connection | ConnectionOptions | string;
+type DataSourceToken = DataSource | DataSourceOptions | string;
 
 export class EntitiesMetadataStorage {
   private static readonly storage = new Map<string, EntityClassOrSchema[]>();
 
-  static addEntitiesByConnection(
-    connection: ConnectionToken,
+  static addEntitiesByDataSource(
+    connection: DataSourceToken,
     entities: EntityClassOrSchema[],
   ): void {
     const connectionToken =
@@ -29,8 +29,8 @@ export class EntitiesMetadataStorage {
     });
   }
 
-  static getEntitiesByConnection(
-    connection: ConnectionToken,
+  static getEntitiesByDataSource(
+    connection: DataSourceToken,
   ): EntityClassOrSchema[] {
     const connectionToken =
       typeof connection === 'string' ? connection : connection.name;

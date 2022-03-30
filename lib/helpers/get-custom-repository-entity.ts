@@ -26,7 +26,8 @@ export function getCustomRepositoryEntity(
         },
       );
       if (entityRepositoryMetadataArgs) {
-        const targetEntity = entityRepositoryMetadataArgs.entity as EntityClassOrSchema;
+        const targetEntity =
+          entityRepositoryMetadataArgs.entity as EntityClassOrSchema;
         const isEntityRegisteredAlready = entities.indexOf(targetEntity) !== -1;
 
         if (!isEntityRegisteredAlready) {

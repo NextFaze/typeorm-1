@@ -1,5 +1,5 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { Connection, ConnectionOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { EntitiesMetadataStorage } from './entities-metadata.storage';
 import { getCustomRepositoryEntity } from './helpers/get-custom-repository-entity';
 import { EntityClassOrSchema } from './interfaces/entity-class-or-schema.type';
@@ -23,13 +23,13 @@ export class TypeOrmModule {
   static forFeature(
     entities: EntityClassOrSchema[] = [],
     connection:
-      | Connection
-      | ConnectionOptions
+      | DataSource
+      | DataSourceOptions
       | string = DEFAULT_CONNECTION_NAME,
   ): DynamicModule {
     const providers = createTypeOrmProviders(entities, connection);
     const customRepositoryEntities = getCustomRepositoryEntity(entities);
-    EntitiesMetadataStorage.addEntitiesByConnection(connection, [
+    EntitiesMetadataStorage.addEntitiesByDataSource(connection, [
       ...entities,
       ...customRepositoryEntities,
     ]);

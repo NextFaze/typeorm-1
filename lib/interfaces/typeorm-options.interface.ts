@@ -1,5 +1,5 @@
 import { ModuleMetadata, Type } from '@nestjs/common';
-import { Connection, ConnectionOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 export type TypeOrmModuleOptions = {
   /**
@@ -27,12 +27,12 @@ export type TypeOrmModuleOptions = {
   /**
    * If `true`, connection will not be closed on application shutdown.
    */
-  keepConnectionAlive?: boolean;
+  keepDataSourceAlive?: boolean;
   /**
    * If `true`, will show verbose error messages on each connection retry.
    */
   verboseRetryLog?: boolean;
-} & Partial<ConnectionOptions>;
+} & Partial<DataSourceOptions>;
 
 export interface TypeOrmOptionsFactory {
   createTypeOrmOptions(
@@ -40,9 +40,9 @@ export interface TypeOrmOptionsFactory {
   ): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions;
 }
 
-export type TypeOrmConnectionFactory = (
-  options?: ConnectionOptions,
-) => Promise<Connection>;
+export type TypeOrmDataSourceFactory = (
+  options?: DataSourceOptions,
+) => Promise<DataSource>;
 
 export interface TypeOrmModuleAsyncOptions
   extends Pick<ModuleMetadata, 'imports'> {
@@ -52,6 +52,6 @@ export interface TypeOrmModuleAsyncOptions
   useFactory?: (
     ...args: any[]
   ) => Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions;
-  connectionFactory?: TypeOrmConnectionFactory;
+  connectionFactory?: TypeOrmDataSourceFactory;
   inject?: any[];
 }

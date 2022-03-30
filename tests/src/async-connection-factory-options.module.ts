@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { createConnection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { TypeOrmModule } from '../../lib';
 import { Photo } from './photo/photo.entity';
 import { PhotoModule } from './photo/photo.module';
@@ -24,7 +24,7 @@ import { PhotoModule } from './photo/photo.module';
         // i.e. checking for an existing and active connection prior to creating a new one.
         // However, including that logic here causes runtime test errors about variables being used before assignment.
         // Therefore, given the simple nature of this test case, simply create and return a connection.
-        const connection = await createConnection(options!);
+        const connection = await new DataSource(options!).initialize();
         return connection;
       },
     }),
